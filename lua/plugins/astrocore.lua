@@ -33,6 +33,8 @@ return {
         signcolumn = "yes", -- sets vim.opt.signcolumn to yes
         wrap = true, -- sets vim.opt.wrap
         showcmdloc = "statusline", -- 按键显示
+        -- clipboard = "unnamedplus",
+        -- vim.opt.clipboard:append "unnamedplus"
       },
       g = { -- vim.g.<key>
         -- configure global vim variables (vim.g)
@@ -80,6 +82,7 @@ return {
       t = {
         -- setting a mapping to false will disable it
         -- ["<esc>"] = false,
+        ["JJ"] = { "<C-\\><C-n>", desc = "Exit Terminal Mode" },
       },
     },
   },

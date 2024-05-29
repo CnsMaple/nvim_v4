@@ -16,30 +16,6 @@ else
   print "This is an unsupported operating system."
 end
 
--- 将 g:neovide_no_idle 设置为布尔值将强制 Neovide 始终重绘。如果动画似乎停止得太早，这可能是一个快速解决方案。
-vim.g.neovide_no_idle = true
--- 退出确认
-vim.g.neovide_confirm_quit = true
--- 全屏(没有任务栏的那种)
-vim.g.neovide_fullscreen = false
--- 记住窗口大小
-vim.g.neovide_remember_window_size = true
--- 没有焦点的时候的刷新率
-vim.g.neovide_refresh_rate_idle = 5
--- 普通刷新率
-vim.g.neovide_refresh_rate = 60
--- 滚动动画的时间
-vim.g.neovide_scroll_animation_length = 0.3
-
-vim.opt.clipboard:append("unnamedplus")
-
-vim.keymap.set(
-  { "n", "i" },
-  "<M-s>",
-  function() require("lsp_signature").toggle_float_win() end,
-  { silent = true, noremap = true, desc = "toggle signature" }
-)
-
 local Path = require "plenary.path"
 local nvim_data_codeium_path = tostring(Path:new(vim.fn.stdpath "data", "codeium"))
 
@@ -47,7 +23,7 @@ return {
   -- 预览跳转
   {
     "nacro90/numb.nvim",
-    event = "VeryLazy",
+    event = "User AstroFile",
     enabled = true,
     opts = {
       show_numbers = true, -- Enable 'number' for the window while peeking
@@ -57,126 +33,14 @@ return {
       centered_peeking = true, -- Peeked line will be centered relative to window
     },
   },
-  -- 字符反转
-  {
-    "nguyenvukhang/nvim-toggler",
-    event = "BufEnter",
-    config = function()
-      require("nvim-toggler").setup {
-        -- init.lua
-        -- your own inverses
-        inverses = {
-          ["True"] = "False",
-        },
-        -- removes the default <leader>i keymap
-        remove_default_keybinds = true,
-        vim.keymap.set({ "n", "v" }, "<leader>i", require("nvim-toggler").toggle, { desc = "Reverse Text" }),
-      }
-    end,
-  },
-  -- 文本移动
-  {
-    "echasnovski/mini.move",
-    version = "*",
-    config = true,
-    event = "BufEnter",
-  },
-  -- 文本统一替换
-  {
-    "nvim-pack/nvim-spectre",
-    cmd = "Spectre",
-    enabled = true,
-    event = "VeryLazy",
-    opts = { open_cmd = "noswapfile vnew" },
-    -- stylua: ignore
-    keys = {
-        { "<leader>fR", function() require("spectre").open() end, desc = "Replace in files (Spectre)" },
-    },
-  },
   -- 比";"更好用的插件
-  { "tpope/vim-repeat", event = "VeryLazy" },
-  -- 多文本选择
-  {
-    "smoka7/multicursors.nvim",
-    event = "VeryLazy",
-    dependencies = {
-      "smoka7/hydra.nvim",
-    },
-    opts = {},
-    cmd = { "MCstart", "MCvisual", "MCclear", "MCpattern", "MCvisualPattern", "MCunderCursor" },
-    keys = {
-      {
-        mode = { "v", "n" },
-        "<Leader>m",
-        "<cmd>MCstart<cr>",
-        desc = "Create a selection for selected text or word under the cursor",
-      },
-    },
-  },
+  { "tpope/vim-repeat", event = "User AstroFile" },
   -- 更好的主题
   {
     "folke/tokyonight.nvim",
     opts = {
       transparent = false,
-    },
-  },
-  -- markdown 预览
-  {
-    "toppair/peek.nvim",
-    enabled = vim.fn.has "win32" == 1,
-    build = "deno task --quiet build:fast",
-    ft = { "markdown" },
-    opts = function(_, opts)
-      vim.api.nvim_create_user_command("PeekOpen", require("peek").open, {})
-      vim.api.nvim_create_user_command("PeekClose", require("peek").close, {})
-      return opts
-    end,
-    cmd = {
-      "PeekOpen",
-      "PeekClose",
-    },
-  },
-  -- markdown 图片粘贴
-  {
-    "CnsMaple/clipboard-image.nvim",
-    ft = { "markdown" },
-    opts = {
-      markdown = {
-        img_dir = { "%:p:h", "img" },
-        img_dir_txt = "img",
-        img_name = function() return vim.fn.input { prompt = "Enter file name: " } end,
-      },
-    },
-    cmd = { "PasteImg" },
-  },
-  -- markdown 更多语法支持
-  {
-    "jakewvincent/mkdnflow.nvim",
-    enabled = true,
-    ft = { "markdown" },
-    config = function() require("mkdnflow").setup {} end,
-  },
-  -- 调试的虚拟文本
-  {
-    "theHamsta/nvim-dap-virtual-text",
-    dependencies = { "mfussenegger/nvim-dap", "nvim-treesitter/nvim-treesitter" },
-    event = "User AstroFile",
-    opts = {},
-  },
-  -- 更好的标记插件
-  {
-    "chentoast/marks.nvim",
-    event = "User AstroFile",
-    opts = {
-      excluded_filetypes = {
-        "qf",
-        "NvimTree",
-        "toggleterm",
-        "TelescopePrompt",
-        "alpha",
-        "netrw",
-        "neo-tree",
-      },
+      style = "night",
     },
   },
   -- 窗口移动插件
@@ -184,140 +48,11 @@ return {
     "sindrets/winshift.nvim",
     event = "User AstroFile",
   },
-  -- 搜索高亮
-  {
-    "kevinhwang91/nvim-hlslens",
-    opts = {},
-    event = "BufRead",
-    init = function() vim.on_key(nil, vim.api.nvim_get_namespaces()["auto_hlsearch"]) end,
-    config = function()
-      require("hlslens").setup()
-
-      local kopts = { noremap = true, silent = true }
-
-      vim.keymap.set("n", "n", function()
-        if vim.fn.searchcount().total ~= 0 then
-          vim.cmd "execute('normal! ' . v:count1 . 'n')"
-          vim.cmd "lua require('hlslens').start()"
-        end
-      end, kopts)
-      vim.keymap.set("n", "N", function()
-        if vim.fn.searchcount().total ~= 0 then
-          vim.cmd "execute('normal! ' . v:count1 . 'N')"
-          vim.cmd "lua require('hlslens').start()"
-        end
-      end, kopts)
-      -- vim.api.nvim_set_keymap('n', 'N',
-      --     [[<Cmd>execute('normal! ' . v:count1 . 'N')<CR><Cmd>lua require('hlslens').start()<CR>]],
-      --     kopts)
-      -- vim.api.nvim_set_keymap('n', '*', [[*<Cmd>lua require('hlslens').start()<CR>]], kopts)
-      -- vim.api.nvim_set_keymap('n', '#', [[#<Cmd>lua require('hlslens').start()<CR>]], kopts)
-      -- vim.api.nvim_set_keymap('n', 'g*', [[g*<Cmd>lua require('hlslens').start()<CR>]], kopts)
-      -- vim.api.nvim_set_keymap('n', 'g#', [[g#<Cmd>lua require('hlslens').start()<CR>]], kopts)
-    end,
-  },
-  -- 字符匹配 if else
-  {
-    "nvim-treesitter/nvim-treesitter",
-    dependencies = { "andymass/vim-matchup" },
-    init = function()
-      vim.g.matchup_matchparen_offscreen = { method = "popup", fullwidth = 1, highlight = "Normal", syntax_hl = 1 }
-    end,
-    opts = { matchup = { enable = true } },
-  },
   {
     "j-hui/fidget.nvim",
     event = "LspAttach",
     opts = {
       -- options
-    },
-  },
-
-  -- 丝滑滚动
-  {
-    "declancm/cinnamon.nvim",
-    enabled = vim.g.neovide == nil,
-    event = "VeryLazy",
-    opts = {
-      -- default_delay = 1,
-      -- extra_keymaps = false, -- Create extra keymaps.
-      -- extended_keymaps = false, -- Create extended keymaps.
-      -- scroll_limit = 50,
-    },
-  },
-  -- cmd的辅助
-  {
-    "hrsh7th/cmp-cmdline",
-    keys = { ":", "/", "?" }, -- lazy load cmp on more keys along with insert mode
-    dependencies = { "hrsh7th/nvim-cmp" },
-    opts = function()
-      local cmp = require "cmp"
-      return {
-        {
-          type = "/",
-          mapping = cmp.mapping.preset.cmdline(),
-          sources = {
-            { name = "buffer" },
-          },
-        },
-        {
-          type = ":",
-          mapping = cmp.mapping.preset.cmdline(),
-          sources = cmp.config.sources({
-            { name = "path" },
-          }, {
-            {
-              name = "cmdline",
-              option = {
-                ignore_cmds = { "Man", "!" },
-              },
-            },
-          }),
-        },
-      }
-    end,
-    config = function(_, opts)
-      local cmp = require "cmp"
-      vim.tbl_map(function(val) cmp.setup.cmdline(val.type, val) end, opts)
-    end,
-  },
-  -- 快速移动插件
-  {
-    "folke/flash.nvim",
-    event = "VeryLazy",
-    opts = {
-      modes = {
-        search = {
-          enabled = false,
-        },
-        char = {
-          enabled = false,
-        },
-      },
-    },
-    keys = {
-      {
-        "f",
-        mode = { "n", "x", "o" },
-        function() require("flash").jump() end,
-        desc = "Flash",
-      },
-      {
-        "F",
-        mode = { "n", "o", "x" },
-        function() require("flash").treesitter() end,
-        desc = "Flash Treesitter",
-      },
-    },
-  },
-  -- 参数提示
-  {
-    "neovim/nvim-lspconfig",
-    dependencies = {
-      "ray-x/lsp_signature.nvim",
-      opts = {
-        hint_enable = false, -- disable hints as it will crash in some terminal
-      },
     },
   },
   -- codeium
@@ -338,7 +73,7 @@ return {
       end,
     },
     {
-      "CnsMaple/codeium.nvim",
+      "Exafunction/codeium.nvim",
       cmd = "Codeium",
       event = "User AstroFile",
       dependencies = {
@@ -417,6 +152,105 @@ return {
         { "zbirenbaum/copilot.lua" },
       },
       opts = {},
+    },
+    {
+      "CopilotC-Nvim/CopilotChat.nvim",
+      branch = "canary",
+      dependencies = {
+        { "zbirenbaum/copilot.lua" }, -- or github/copilot.vim
+        { "nvim-lua/plenary.nvim" }, -- for curl, log wrapper
+        {
+          "AstroNvim/astrocore",
+          opts = function(_, opts)
+            local maps = opts.mappings
+            maps.n["<Leader>a"] = { desc = "+CopilotChat (AI)" }
+            maps.v["<Leader>a"] = { desc = "+CopilotChat (AI)" }
+          end,
+        },
+        {
+          "nvim-telescope/telescope.nvim",
+          optional = true,
+          keys = {
+            -- Show help actions with telescope
+            {
+              "<leader>ad",
+              function()
+                local actions = require "CopilotChat.actions"
+                local help = actions.help_actions()
+                if not help then return end
+                require("CopilotChat.integrations.telescope").pick(help)
+              end,
+              desc = "Diagnostic Help (CopilotChat)",
+              mode = { "n", "v" },
+            },
+            -- Show prompts actions with telescope
+            {
+              "<leader>ap",
+              function()
+                local actions = require "CopilotChat.actions"
+                require("CopilotChat.integrations.telescope").pick(actions.prompt_actions())
+              end,
+              desc = "Prompt Actions (CopilotChat)",
+              mode = { "n", "v" },
+            },
+          },
+        },
+      },
+      opts = function()
+        local user = vim.env.USER or "User"
+        user = user:sub(1, 1):upper() .. user:sub(2)
+        return {
+          model = "gpt-4",
+          auto_insert_mode = true,
+          show_help = true,
+          question_header = "  " .. user .. " ",
+          answer_header = "  Copilot ",
+          window = {
+            width = 0.4,
+          },
+          selection = function(source)
+            local select = require "CopilotChat.select"
+            return select.visual(source) or select.buffer(source)
+          end,
+        }
+      end,
+      keys = {
+        {
+          "<leader>aa",
+          function() return require("CopilotChat").toggle() end,
+          desc = "Toggle (CopilotChat)",
+          mode = { "n", "v" },
+        },
+        {
+          "<leader>ax",
+          function() return require("CopilotChat").reset() end,
+          desc = "Clear (CopilotChat)",
+          mode = { "n", "v" },
+        },
+        {
+          "<leader>aq",
+          function()
+            local input = vim.fn.input "Quick Chat: "
+            if input ~= "" then require("CopilotChat").ask(input) end
+          end,
+          desc = "Quick Chat (CopilotChat)",
+          mode = { "n", "v" },
+        },
+      },
+      config = function(_, opts)
+        local chat = require "CopilotChat"
+        local ns = vim.api.nvim_create_namespace "copilot-chat-text-hl"
+
+        vim.api.nvim_create_autocmd("BufEnter", {
+          pattern = "copilot-chat",
+          callback = function(ev)
+            vim.opt_local.relativenumber = false
+            vim.opt_local.number = false
+          end,
+        })
+
+        chat.setup(opts)
+      end,
     },
   },
 }
