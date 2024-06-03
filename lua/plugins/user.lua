@@ -244,8 +244,8 @@ return {
         vim.api.nvim_create_autocmd("BufEnter", {
           pattern = "copilot-chat",
           callback = function(ev)
-            vim.opt_local.relativenumber = false
-            vim.opt_local.number = false
+            vim.opt_local.relativenumber = true
+            vim.opt_local.number = true
           end,
         })
 
