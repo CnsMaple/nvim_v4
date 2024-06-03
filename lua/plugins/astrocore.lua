@@ -75,6 +75,9 @@ return {
           desc = "Redraw / clear hlsearch / diff update",
         },
       },
+      i = {
+        ["jj"] = { "<cmd>nohl<cr><esc>", desc = "exit insert mode" },
+      },
       v = {
         ["<S-h>"] = { "^", desc = "Move to first non-blank character of line" },
         ["<S-l>"] = { "$g_", desc = "Move to end of line" },
