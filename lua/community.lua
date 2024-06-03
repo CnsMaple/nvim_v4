@@ -45,6 +45,7 @@ return {
   { import = "astrocommunity.pack.lua" },
   { import = "extras.lua_ls" },
   { import = "astrocommunity.pack.markdown" },
+  { import = "astrocommunity.markdown-and-latex.markdown-preview-nvim" },
   { import = "astrocommunity.pack.python" },
   { import = "extras.pyright" },
 }
