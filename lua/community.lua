@@ -42,8 +42,7 @@ return {
   { import = "astrocommunity.pack.vue" },
 
   { import = "astrocommunity.pack.json" },
-  { import = "astrocommunity.pack.lua" },
-  { import = "extras.lua_ls" },
+  { import = "extras.lua" },
   { import = "astrocommunity.pack.markdown" },
   { import = "astrocommunity.markdown-and-latex.markdown-preview-nvim" },
   { import = "astrocommunity.pack.python" },
