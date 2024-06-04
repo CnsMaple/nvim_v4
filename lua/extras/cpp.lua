@@ -1,5 +1,29 @@
 local Path = require "plenary.path"
 
+local dap = require "dap"
+
+dap.adapters.gdb = {
+  type = "executable",
+  command = "gdb",
+  args = { "-i", "dap" },
+}
+
+local dap_config = {
+  name = "Launch (gdb)",
+  type = "gdb",
+  request = "launch",
+  program = function() return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file") end,
+  cwd = "${workspaceFolder}",
+  stopAtBeginningOfMainSubprogram = false,
+}
+
+dap.configurations.cpp = {
+  dap_config,
+}
+dap.configurations.c = {
+  dap_config,
+}
+
 return {
   {
     "cmake-tools.nvim",
@@ -139,6 +163,12 @@ return {
     "AstroNvim/astrolsp",
     ---@type AstroLSPOpts
     opts = {
+      handlers = {
+        function(server, opts) require("lspconfig").qmlls.setup(opts) end,
+      },
+      servers = {
+        "qmlls"
+      },
       ---@diagnostic disable: missing-fields
       config = {
         clangd = {
