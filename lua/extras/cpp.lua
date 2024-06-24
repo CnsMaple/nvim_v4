@@ -24,6 +24,8 @@ dap.configurations.c = {
   dap_config,
 }
 
+require("dap.ext.vscode").load_launchjs(nil, { cppdbg = { "c", "cpp" } })
+
 return {
   {
     "cmake-tools.nvim",
