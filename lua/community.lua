@@ -16,6 +16,7 @@ return {
   { import = "extras.noice-nvim" },
 
   { import = "astrocommunity.diagnostics.trouble-nvim" },
+  { import = "extras.trouble-nvim" },
 
   { import = "astrocommunity.utility.nvim-toggler" },
   { import = "extras.nvim-toggler" },
