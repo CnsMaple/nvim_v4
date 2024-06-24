@@ -34,6 +34,7 @@ return {
   { import = "astrocommunity.motion.vim-matchup" },
   { import = "astrocommunity.scrolling.mini-animate" },
   { import = "astrocommunity.completion.cmp-cmdline" },
+  { import = "astrocommunity.completion.codeium-nvim" },
   { import = "astrocommunity.motion.flash-nvim" },
 
   { import = "astrocommunity.pack.cpp" },
