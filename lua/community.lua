@@ -10,7 +10,6 @@ local Path = require "plenary.path"
 return {
   "AstroNvim/astrocommunity",
   { import = "astrocommunity.colorscheme.tokyonight-nvim" },
-
   { import = "astrocommunity.motion.mini-surround" },
 
   { import = "astrocommunity.utility.noice-nvim" },
@@ -35,6 +34,10 @@ return {
   { import = "astrocommunity.scrolling.neoscroll-nvim" },
   { import = "astrocommunity.completion.cmp-cmdline" },
   { import = "astrocommunity.completion.codeium-nvim" },
+
+  { import = "astrocommunity.completion.copilot-cmp" },
+  { import = "extras.copilot-chat" },
+
   { import = "astrocommunity.motion.flash-nvim" },
 
   { import = "astrocommunity.pack.cpp" },
