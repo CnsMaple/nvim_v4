@@ -32,7 +32,7 @@ return {
   { import = "astrocommunity.debugging.nvim-dap-virtual-text" },
   { import = "astrocommunity.motion.marks-nvim" },
   { import = "astrocommunity.motion.vim-matchup" },
-  { import = "astrocommunity.scrolling.mini-animate" },
+  { import = "astrocommunity.scrolling.neoscroll-nvim" },
   { import = "astrocommunity.completion.cmp-cmdline" },
   { import = "astrocommunity.completion.codeium-nvim" },
   { import = "astrocommunity.motion.flash-nvim" },
