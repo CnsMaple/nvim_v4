@@ -1,6 +1,7 @@
 return {
   "CopilotC-Nvim/CopilotChat.nvim",
   branch = "canary",
+  cmd = "CopilotChat",
   dependencies = {
     { "zbirenbaum/copilot.lua" }, -- or github/copilot.vim
     { "nvim-lua/plenary.nvim" }, -- for curl, log wrapper
@@ -84,11 +85,11 @@ return {
   },
   config = function(_, opts)
     local chat = require "CopilotChat"
-    local ns = vim.api.nvim_create_namespace "copilot-chat-text-hl"
+    require("CopilotChat.integrations.cmp").setup()
 
     vim.api.nvim_create_autocmd("BufEnter", {
       pattern = "copilot-chat",
-      callback = function(ev)
+      callback = function()
         vim.opt_local.relativenumber = true
         vim.opt_local.number = true
       end,
