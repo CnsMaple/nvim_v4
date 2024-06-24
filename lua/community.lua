@@ -9,6 +9,8 @@ local Path = require "plenary.path"
 ---@type LazySpec
 return {
   "AstroNvim/astrocommunity",
+  { import = "astrocommunity.colorscheme.tokyonight-nvim" },
+
   { import = "astrocommunity.motion.mini-surround" },
 
   { import = "astrocommunity.utility.noice-nvim" },

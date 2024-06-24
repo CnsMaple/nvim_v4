@@ -35,14 +35,6 @@ return {
   },
   -- 比";"更好用的插件
   { "tpope/vim-repeat", event = "User AstroFile" },
-  -- 更好的主题
-  {
-    "folke/tokyonight.nvim",
-    opts = {
-      transparent = false,
-      style = "night",
-    },
-  },
   -- 窗口移动插件
   {
     "sindrets/winshift.nvim",
