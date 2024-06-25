@@ -30,7 +30,7 @@ return {
   {
     "cmake-tools.nvim",
     optional = true,
-    enabled = false,
+    enabled = true,
     opts = {
       cmake_regenerate_on_save = false,
       cmake_build_directory = "build\\${variant:buildType}",
@@ -165,12 +165,9 @@ return {
     "AstroNvim/astrolsp",
     ---@type AstroLSPOpts
     opts = {
-      handlers = {
-        function(server, opts) require("lspconfig").qmlls.setup(opts) end,
-      },
-      servers = {
-        "qmlls"
-      },
+      -- servers = {
+      --   "qmlls",
+      -- },
       ---@diagnostic disable: missing-fields
       config = {
         clangd = {
@@ -196,8 +193,8 @@ return {
             require("fishfunc").OsCho("clangd.exe", "clangd", "clangd", "clangd"),
             -- 主要标志
             -- "--compile-commands-dir=build/Debug/.qtc_clangd", -- qt配置编译命令文件
-            -- "--compile-commands-dir=build/Debug", -- nvim的cmake配置编译命令文件
-            "--compile-commands-dir=build", -- nvim的cmake配置编译命令文件
+            "--compile-commands-dir=build/Debug", -- nvim的cmake配置编译命令文件
+            -- "--compile-commands-dir=build", -- nvim的cmake配置编译命令文件
             -- "--query-driver=D:/CodeBin/Qt/Tools/mingw1120_64/bin/gcc-*.exe,D:/CodeBin/Qt/Tools/mingw1120_64/bin/g++-*.exe",
 
             -- 功能
@@ -219,31 +216,40 @@ return {
             "--pretty", -- 输出的 JSON 文件更美观
           },
         },
-        -- FIX: 这里不对，没有正常启动
-        qmlls = {
-          -- root_dir = function(fname)
-          --   return require("lspconfig.util").root_pattern(
-          --     "Makefile",
-          --     "configure.ac",
-          --     "configure.in",
-          --     "config.h.in",
-          --     "meson.build",
-          --     "meson_options.txt",
-          --     "build.ninja",
-          --     "CMakeLists.txt",
-          --     "main.cpp",
-          --     ".clangd",
-          --     ".clang-tidy",
-          --     ".clang-format"
-          --   )(fname) or require("lspconfig.util").root_pattern("compile_commands.json", "compile_flags.txt")(
-          --     fname
-          --   ) or require("lspconfig.util").find_git_ancestor(fname)
-          -- end,
-          cmd = {
-            "D:/CodeBin/Qt/Tools/QtDesignStudio/qt6_design_studio_reduced_version/bin/qmlls.exe",
-          },
-        },
       },
     },
+  },
+  -- 注册一个qml的lsp
+  {
+    "neovim/nvim-lspconfig",
+    opts = function(plugin, opts)
+      require("lspconfig").qmlls.setup {
+        root_dir = function(fname)
+          return require("lspconfig.util").root_pattern(
+            "Makefile",
+            "configure.ac",
+            "configure.in",
+            "config.h.in",
+            "meson.build",
+            "meson_options.txt",
+            "build.ninja",
+            "CMakeLists.txt",
+            "main.cpp",
+            ".clangd",
+            ".clang-tidy",
+            ".clang-format"
+          )(fname) or require("lspconfig.util").root_pattern("compile_commands.json", "compile_flags.txt")(
+            fname
+          ) or require("lspconfig.util").find_git_ancestor(fname)
+        end,
+        cmd = {
+          "D:/CodeBin/Qt/Tools/QtDesignStudio/qt6_design_studio_reduced_version/bin/qmlls.exe",
+        },
+        filetypes = { "qml", "qmljs" },
+        -- root_dir = function(fname) return util.find_git_ancestor(fname) end,
+        single_file_support = true,
+      }
+      return opts
+    end,
   },
 }
