@@ -36,15 +36,23 @@ return {
     "hrsh7th/nvim-cmp",
     opts = function(_, opts)
       local cmp = require "cmp"
+      -- 默认不选第一个选择
+      -- opts.preselect = cmp.PreselectMode.None
+      -- opts.completion.completeopt = "menu,menuone,noselect"
+
       opts.mapping["<Tab>"] = nil
       opts.mapping["<S-Tab>"] = nil
 
       opts.mapping["<C-y>"] = cmp.mapping(cmp.mapping.complete())
       opts.mapping["<C-e>"] = cmp.mapping(cmp.mapping.abort())
-      opts.mapping["<C-p>"] = cmp.mapping(cmp.mapping.select_prev_item { behavior = cmp.SelectBehavior.Select })
-      opts.mapping["<C-n>"] = cmp.mapping(cmp.mapping.select_next_item { behavior = cmp.SelectBehavior.Select })
-      opts.mapping["<C-k>"] = cmp.mapping(cmp.mapping.select_prev_item { behavior = cmp.SelectBehavior.Select })
-      opts.mapping["<C-j>"] = cmp.mapping(cmp.mapping.select_next_item { behavior = cmp.SelectBehavior.Select })
+      opts.mapping["<C-p>"] =
+        cmp.mapping(cmp.mapping.select_prev_item { behavior = cmp.SelectBehavior.Select }, { "i", "c" })
+      opts.mapping["<C-n>"] =
+        cmp.mapping(cmp.mapping.select_next_item { behavior = cmp.SelectBehavior.Select }, { "i", "c" })
+      opts.mapping["<C-k>"] =
+        cmp.mapping(cmp.mapping.select_prev_item { behavior = cmp.SelectBehavior.Select }, { "i", "c" })
+      opts.mapping["<C-j>"] =
+        cmp.mapping(cmp.mapping.select_next_item { behavior = cmp.SelectBehavior.Select }, { "i", "c" })
 
       local lspkind = require "lspkind"
 
