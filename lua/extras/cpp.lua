@@ -71,6 +71,9 @@ return {
         spinner = { "⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏" }, -- icons used for progress display
         refresh_rate_ms = 100, -- how often to iterate icons
       },
+      cmake_dap_configuration = { -- debug settings for cmake
+        type = "cppdbg",
+      },
     },
   },
   -- {
