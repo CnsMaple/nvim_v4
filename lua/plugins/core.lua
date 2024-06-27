@@ -588,6 +588,19 @@ return {
   },
   {
     "nvim-telescope/telescope.nvim",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      { "AstroNvim/astroui", opts = { icons = { Neogit = "󰰔" } } },
+      {
+        "AstroNvim/astrocore",
+        opts = function(_, opts)
+          local maps = opts.mappings
+          local builtin = require "telescope.builtin"
+          maps.n["gd"] = { function() builtin.lsp_definitions() end, desc = "LSP Definitions" }
+          maps.n["grr"] = { function() builtin.lsp_references() end, desc = "LSP References" }
+        end,
+      },
+    },
     opts = {
       defaults = {
         layout_strategy = "vertical",
