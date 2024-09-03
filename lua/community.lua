@@ -27,7 +27,7 @@ return {
   { import = "extras.lsp-signature-nvim" },
 
   { import = "astrocommunity.motion.mini-move" },
-  { import = "astrocommunity.project.nvim-spectre" },
+  { import = "astrocommunity.search.nvim-spectre" },
   { import = "astrocommunity.editing-support.multicursors-nvim" },
   { import = "astrocommunity.debugging.nvim-dap-virtual-text" },
   { import = "astrocommunity.motion.marks-nvim" },

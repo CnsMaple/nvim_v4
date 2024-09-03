@@ -73,6 +73,7 @@ return {
       },
       cmake_dap_configuration = { -- debug settings for cmake
         type = "cppdbg",
+        -- type = "codelldb",
       },
     },
   },

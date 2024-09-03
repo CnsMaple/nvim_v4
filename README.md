@@ -159,3 +159,8 @@ or
 `set clipboard=unnamedplus`
 
 # 待修正的问题
+
+1. 为什么终端界面不能通过快捷键打开终端？
+2. 好像todo-comments插件有问题，显示异常。
+3. repl的补全会导致崩溃
+4. statusline的代码需要优化一下
