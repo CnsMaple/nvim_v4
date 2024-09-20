@@ -4,15 +4,11 @@
 
 Windows：
 
-`scoop install nodejs fd ripgrep sed gcc make fzf gzip deno clangd cmake gdb`
+`scoop install nodejs fd ripgrep sed gcc make fzf gzip deno clangd cmake gdb rust`
 
 archlinux:
 
-`yay -S neovim cmake nodejs gdb fd unzip zip base-devel deno`
-
-debian:
-
-`sudo apt install cmake nodejs gdb fd-find unzip zip build-essential`
+`yay -S neovim cmake nodejs gdb fd unzip zip base-devel deno rust`
 
 需要变动的包：
 
