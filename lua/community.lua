@@ -69,4 +69,9 @@ return {
   { import = "astrocommunity.pack.python" },
   { import = "extras.pyright" },
   { import = "extras.python" },
+
+  { import = "extras.fitten-code" },
+  -- { import = "astrocommunity.completion.fittencode-nvim" },
+
+  { import = "astrocommunity.pack.dart" },
 }
