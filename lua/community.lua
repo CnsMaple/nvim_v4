@@ -44,17 +44,29 @@ return {
 
   { import = "astrocommunity.motion.flash-nvim" },
 
-  { import = "astrocommunity.pack.cpp" },
-  { import = "extras.cpp" },
+  -- 这个是cpp的配置
+  -- { import = "astrocommunity.pack.cpp" },
+  -- { import = "extras.cpp" },
 
-  { import = "astrocommunity.pack.cmake" },
-  { import = "astrocommunity.pack.html-css" },
-  { import = "astrocommunity.pack.vue" },
+  -- cmake的配置
+  -- { import = "astrocommunity.pack.cmake" },
 
+  -- 这个是vue的配置
+  -- { import = "astrocommunity.pack.html-css" },
+  -- { import = "astrocommunity.pack.vue" },
+
+  -- 这个是json的配置
   { import = "astrocommunity.pack.json" },
+
+  -- lua的配置
   { import = "extras.lua" },
+
+  -- markdown的配置
   { import = "astrocommunity.pack.markdown" },
   { import = "astrocommunity.markdown-and-latex.markdown-preview-nvim" },
+
+  -- python的配置
   { import = "astrocommunity.pack.python" },
   { import = "extras.pyright" },
+  { import = "extras.python" },
 }
